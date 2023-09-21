@@ -16,25 +16,43 @@
         "id": 2,
         "title": "delectus aut autem",
         "completed": false
-    }]
+    }];
     
     const fetchTodos = () => {
         fetch('https://jsonplaceholder.typicode.com/todos')
         .then( (response) => response.json())
         .then( (json) => arrayOfTodos = json)
         .catch( (error) => console.error(error))
-    }
-    const logTodos = () => {
-        console.log(arrayOfTodos)
-    }
+    };
+    // const logTodos = () => {
+    //     console.log(arrayOfTodos);
+    // }
     
-    const populateTodos = () => {
-        const todoList = document.querySelector(`#todo-list`)
-        
-        for (let i=0; i < arrayOfTodos.length; i++) {
-            let todo = document.createElement('li')
-            todo.textContent = arrayOfTodos[i].title;
+    const createTableFromJSON = () => {
+        let todoList = document.querySelector(`#todo-list`);
+        let table = document.createElement("table");
 
-            todoList.appendChild(todo);
+        let headerRow = document.createElement("tr");
+        for (let key in arrayOfTodos[0]) {
+            let headerCell = document.createElement("th");
+            headerCell.innerText = key;
+            headerRow.appendChild(headerCell);
+        
+        }
+        table.appendChild(headerRow);
+
+        for (let i=0; i < arrayOfTodos.length; i++) {
+            let todo = document.createElement('tr');
+            for (let key in arrayOfTodos[i]) {
+                let cell = document.createElement("td");
+                cell.innerText = arrayOfTodos[i][key];
+                todo.appendChild(cell);
+            }
+            table.appendChild(todo);
+            
+            // todo.textContent = arrayOfTodos[i].title;
+
+            // todoList.appendChild(todo);
         };
-    }
+        todoList.appendChild(table);
+    };
