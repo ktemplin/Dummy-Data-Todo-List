@@ -19,24 +19,42 @@
     }];
     var filteredTodos;
     // Create function to fetch the todos and populate the arrayOfTodos with the contents of the json being returned.
+    // V1 back in action:
     const fetchTodos = () => {
-        return new Promise((resolve, reject) => {
-            fetch('https://jsonplaceholder.typicode.com/todos')
-                .then((response) => response.json())
-                .then((json) => {
-                    arrayOfTodos = json;
-                    resolve(); // Resolve the promise when fetching is done
-                })
-                .catch((error) => reject(error));
-        });
-    };
+        fetch('https://jsonplaceholder.typicode.com/todos')
+        .then( (response) => response.json())
+        .then( (json) => arrayOfTodos = json)
+        .catch( (error) => console.error(error))
+    }
+
+    // const fetchTodos = () => {
+    //     return new Promise((resolve, reject) => {
+    //         fetch('https://jsonplaceholder.typicode.com/todos')
+    //             .then((response) => response.json())
+    //             .then((json) => {
+    //                 arrayOfTodos = json;
+    //                 resolve(); // Resolve the promise when fetching is done
+    //             })
+    //             .catch((error) => reject(error));
+    //     });
+    // };
     // const logTodos = () => {
     //     console.log(arrayOfTodos);
     // }
     
     // Generate a table from the arrayOfTodos and populate the UI
-    const createTableFromJSON = async () => {
-        await fetchTodos();
+    const createTableFromJSON = () => {
+        // fetchTodos()
+        // Testing
+        // async removed from const createTableFromJSON = async () => {
+        // if (arrayOfTodos.length < 3) {
+        //     try {
+        //         await fetchTodos(); // Wait for fetchTodos to complete
+        //     } catch (error) {
+        //         console.error(error);
+        //         return; // Exit the function if there was an error fetching data
+        //     }
+        // }
         
         let todoList = document.querySelector(`#todo-list`);
         todoList.innerHTML = ""
@@ -100,11 +118,15 @@
     const completedToDos = () => {
         if (filteredTodos == null || filteredTodos == ''){
             fetchTodos();
+            const completedTodos = arrayOfTodos.filter((todo) => todo.completed);
+            arrayOfTodos = completedTodos;
         } else {
             arrayOfTodos = filteredTodos;
+            const completedTodos = arrayOfTodos.filter((todo) => todo.completed);
+            arrayOfTodos = completedTodos;
         }
-        const completedTodos = arrayOfTodos.filter((todo) => todo.completed);
-        arrayOfTodos = completedTodos;
+        // const completedTodos = arrayOfTodos.filter((todo) => todo.completed);
+        // arrayOfTodos = completedTodos;
         createTableFromJSON();
     };
 
@@ -120,6 +142,7 @@
     }
 
     const clearTodos = () => {
+        arrayOfTodos = [];
         let todoList = document.querySelector(`#todo-list`);
         todoList.innerHTML = "";
     }
