@@ -17,12 +17,26 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+        <!-- Remove these buttons and consolidate functionality into the populate one. 
+            <button onclick="logTodos()">Log Todos</button> -->
         <button onclick="fetchTodos()">Fetch Todos</button>
-        <button onclick="logTodos()">Log Todos</button>
-        <button onclick="populateTodos()">Populate Todos</button>
-        <ol id="todo-list">
-        <!-- LIs will go here -->
-        </ol>
+        <button onclick="createTableFromJSON()">Populate Todos</button>
+        <button onclick="clearTodos()">Clear List</button>
+        <br>
+        <p>Filter by userId:</p>
+        <input type="number" name="filter" id="filter" hint="1-10">
+        <button onclick="filterTable()">Filter</button>
+
+        <br>
+        <!-- Build in the button to remove todos from the view-->
+        <br>
+        <button onclick="completedToDos()">Show Completed</button>
+        <button onclick="incompleteToDos()">Show Incomplete</button>
+
+
+        <div id="todo-list">
+        <!-- Table will go here, updated from the OL and LI that was created previously. -->
+        </div>
 
         <script src="main.js" async defer></script>
     </body>
